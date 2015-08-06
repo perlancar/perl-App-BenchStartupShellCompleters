@@ -1,0 +1,41 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010001;
+use strict;
+use warnings;
+
+use Benchmark::Command;
+
+Benchmark::Command::run(
+    undef,
+    {
+        cpanm        => [{env=>{COMP_LINE=>"cmd --vers", COMP_POINT=>9}}, qw/_cpanm/],
+        emacs        => [{env=>{COMP_LINE=>"cmd --vers", COMP_POINT=>9}}, qw/_emacs/],
+        mpv          => [{env=>{COMP_LINE=>"cmd --vers", COMP_POINT=>9}}, qw/_mpv/],
+        'youtube-dl' => [{env=>{COMP_LINE=>"cmd --vers", COMP_POINT=>9}}, qw/_youtube-dl/],
+    },
+    {
+        skip_not_found => 1,
+        quiet => 1,
+    },
+);
+
+# ABSTRACT: Benchmark startup time of various shell completers (App::ShellCompleter::*)
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ % bench-startup-shell-completers
+
+Sample output:
+
+# COMMAND: perl bin/bench-startup-shell-completers 2>&1
+
+
+=head1 DESCRIPTION
+
+This script is used to quickly check whether there is a shell completer which is
+getting slow in startup time.
